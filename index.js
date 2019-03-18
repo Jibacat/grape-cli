@@ -86,6 +86,12 @@ let clientRoadmap = {
         }),
         rExt: '.js'
     },
+    'client/**.ts': {
+        parser: fis.plugin('typescript', {
+                target: 1
+            }),
+        rExt: '.js'
+    },
     'client/**.vue' : {
         isMod: true,
         rExt: 'js',
