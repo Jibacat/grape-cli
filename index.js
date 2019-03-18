@@ -216,7 +216,7 @@ fis.on('conf:loaded', function () {
 });
 
 /* 支持ts */ 
-fis.match('client/**.ts', {
+fis.match('**.ts', {
     parser: fis.plugin('typescript', {
         target: 2,
         showNotices: true
@@ -225,7 +225,7 @@ fis.match('client/**.ts', {
 });
 
 /* 支持tsx */ 
-fis.match('client/**.tsx', {
+fis.match('**.tsx', {
     parser: fis.plugin('typescript', {
         target: 2,
         showNotices: true
