@@ -86,12 +86,6 @@ let clientRoadmap = {
         }),
         rExt: '.js'
     },
-    'client/**.ts': {
-        parser: fis.plugin('typescript', {
-                target: 1
-            }),
-        rExt: '.js'
-    },
     'client/**.vue' : {
         isMod: true,
         rExt: 'js',
@@ -219,6 +213,15 @@ fis.on('conf:loaded', function () {
         })
     });
 
+});
+
+/* 支持typescript */ 
+fis.match('**.ts', {
+    parser: fis.plugin('typescript', {
+        target: 1,
+        showNotices: true
+    }),
+    rExt: '.js'
 });
 
 /**
