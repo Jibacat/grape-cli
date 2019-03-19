@@ -97,14 +97,14 @@ let clientRoadmap = {
             })
         ],
         parser: fis.plugin('typescript', {
-            target: 2,
+            target: 4, // ES2017
             showNotices: true
         }),
         rExt: '.js'
     },
     'server/**.{ts,tsx}': {
         parser: fis.plugin('typescript', {
-            target: 2,
+            target: 4, // ES2017
             showNotices: true
         }),
         rExt: '.js'
