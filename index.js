@@ -216,21 +216,12 @@ fis.on('conf:loaded', function () {
 });
 
 /* 支持ts */ 
-fis.match('**.ts', {
+fis.match('**.{ts, tsx}', {
     parser: fis.plugin('typescript', {
         target: 2,
         showNotices: true
     }),
     rExt: '.js'
-});
-
-/* 支持tsx */ 
-fis.match('**.tsx', {
-    parser: fis.plugin('typescript', {
-        target: 2,
-        showNotices: true
-    }),
-    rExt: '.jsx'
 });
 
 /**
