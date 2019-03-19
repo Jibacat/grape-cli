@@ -70,7 +70,7 @@ let clientRoadmap = {
     'client/**.{tpl,js,ts,jsx,es,tsx}': {
         useSameNameRequire: true
     },
-    'client/**.{js,jsx,ts,es,tsx}' : {
+    'client/**.{js,jsx,es}' : {
         preprocessor: [
             fis.plugin('js-require-file'),
             fis.plugin('js-require-css'),
@@ -83,6 +83,29 @@ let clientRoadmap = {
         parser : fis.plugin('babel-5.x', {
             blacklist: [ 'useStrict' ],
             loose: ["es6.classes", "es6.properties.computed"]
+        }),
+        rExt: '.js'
+    }, 
+    'client/**.{ts,tsx}': {
+        preprocessor: [
+            fis.plugin('js-require-file'),
+            fis.plugin('js-require-css'),
+            fis.plugin('define', {
+                defines: {
+                    'process.env.NODE_ENV': JSON.stringify('development')
+                }
+            })
+        ],
+        parser: fis.plugin('typescript', {
+            target: 2,
+            showNotices: true
+        }),
+        rExt: '.js'
+    },
+    'server/**.{ts,tsx}': {
+        parser: fis.plugin('typescript', {
+            target: 1,
+            showNotices: true
         }),
         rExt: '.js'
     },
@@ -183,25 +206,6 @@ let serverRoadmap = {
         //}) //无法使用typescript编译,不支持async
     //}
 };
-
-/* 支持ts */ 
-fis.match('**.ts', {
-    parser: fis.plugin('typescript', {
-        target: 2,
-        showNotices: true
-    }),
-    rExt: '.js'
-});
-
-/* 支持tsx */ 
-fis.match('**.tsx', {
-    parser: fis.plugin('typescript', {
-        jsx: 1,
-        target: 1,
-        showNotices: true
-    }),
-    rExt: '.js'
-});
 
 [clientRoadmap, serverRoadmap].forEach(function (roadmap) {
     fis.util.map(roadmap, function (selector, rules) {
