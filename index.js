@@ -70,7 +70,7 @@ let clientRoadmap = {
     'client/**.{tpl,js,ts,jsx,es,tsx}': {
         useSameNameRequire: true
     },
-    'client/**.{js,jsx,ts,es}' : {
+    'client/**.{js,jsx,ts,es,tsx}' : {
         preprocessor: [
             fis.plugin('js-require-file'),
             fis.plugin('js-require-css'),
@@ -184,6 +184,25 @@ let serverRoadmap = {
     //}
 };
 
+/* 支持ts */ 
+fis.match('**.ts', {
+    parser: fis.plugin('typescript', {
+        target: 2,
+        showNotices: true
+    }),
+    rExt: '.js'
+});
+
+/* 支持tsx */ 
+fis.match('**.tsx', {
+    parser: fis.plugin('typescript', {
+        jsx: 1,
+        target: 1,
+        showNotices: true
+    }),
+    rExt: '.js'
+});
+
 [clientRoadmap, serverRoadmap].forEach(function (roadmap) {
     fis.util.map(roadmap, function (selector, rules) {
         fis.match(selector, rules);
@@ -215,24 +234,6 @@ fis.on('conf:loaded', function () {
 
 });
 
-/* 支持ts */ 
-fis.match('**.ts', {
-    parser: fis.plugin('typescript', {
-        target: 2,
-        showNotices: true
-    }),
-    rExt: '.js'
-});
-
-/* 支持tsx */ 
-fis.match('**.tsx', {
-    parser: fis.plugin('typescript', {
-        target: 1,
-        showNotices: true
-    }),
-    rExt: '.js'
-});
-
 /**
  * node_modules下的静态资源作为模块化处理
  */
@@ -246,7 +247,7 @@ fis.match('/node_modules/(**.{js,jsx,map,css,scss,less,svg,jpg,png,gif,webp,jpeg
  * prod media 对静态资源进行压缩,md5产出
  */
 fis.media('prod')
-    .match('/node_modules/**.{js,jsx,ts}', {
+    .match('/node_modules/**.{js,jsx,ts,tsx}', {
         useHash : true,
         optimizer : fis.plugin('uglify-js', {
             mangle : false
@@ -261,7 +262,7 @@ fis.media('prod')
             })
         ]
     })
-    .match('/client/**.{js,jsx,ts}', {
+    .match('/client/**.{js,jsx,ts,tsx}', {
         useHash : true,
         optimizer : fis.plugin('uglify-js', {
             mangle : false
